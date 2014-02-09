@@ -5,6 +5,8 @@
 package datastructures;
 
 import java.util.Hashtable;
+import java.io.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -12,32 +14,100 @@ import java.util.Hashtable;
  */
 public class StringOperations {
 
+// find the permutation of the given string
+    // better code at geeks for geek
+    public static void wperm(String[] a, int n) {
+        if (n == 1) {
+            StringBuilder sb = new StringBuilder();
+            for (String i : a) {
+                sb.append(i).append(" ");
+            }
+            System.out.println(sb.toString());
+
+            return;
+        }
+        for (int i = 0; i < n; i++) {
+            swap(a, i, n - 1);
+            wperm(a, n - 1);
+            swap(a, i, n - 1);
+        }
+    }
+
+    private static void swap(String[] a, int i, int j) {
+        String c;
+        c = a[i];
+        a[i] = a[j];
+        a[j] = c;
+    }
+
+    /* public static void main(String[] args) {
+     int N =3;
+     String a = "Hello My Friends";
+ 
+     String[] c = a.split("\\s+");
+     wperm(c,3);
+     }
+     */
+    //permutation of string
+    public static ArrayList<String> getPerms(String str) {
+        if (str == null) {
+            return null;
+
+        }
+        ArrayList<String> permutations = new ArrayList<String>();
+        if (str.length() == 0) { // base case
+            permutations.add("");
+            return permutations;
+        }
+        char first = str.charAt(0); // get the first character
+        String remainder = str.substring(1); // remove the 1st character
+        ArrayList<String> words = getPerms(remainder);
+        for (String word : words) {
+            for (int j = 0; j <= word.length(); j++) {
+                String s = insertCharAt(word, first, j);
+                permutations.add(s);
+            }
+        }
+        return permutations;
+    }
+
+    public static String insertCharAt(String word, char c, int i) {
+        String start = word.substring(0, i);
+        String end = word.substring(i);
+        return start + c + end;
+
+    }
+
     //reomove duplicates using hashtable
-    
-    public Hashtable removeDuplicates(String s1){
+    /**
+     *
+     * @param s1
+     * @return
+     */
+    public Hashtable removeDuplicates(String s1) {
         int n = s1.length();
         java.util.Hashtable h = new Hashtable();
-        int i = 0; 
-        while(i < n){
-            if(!h.contains(s1.charAt(i))){
+        int i = 0;
+        while (i < n) {
+            if (!h.contains(s1.charAt(i))) {
                 h.put(true, s1.charAt(i));
-            } else{
-                 i++;
+            } else {
+                i++;
             }
             i++;
         }
         //using iterator and enumeration to iterate over the elements
-        java.util.Enumeration e =h.elements();
+        java.util.Enumeration e = h.elements();
         java.util.Iterator t = (java.util.Iterator) h.elements();
-        while(t.hasNext()){
+        while (t.hasNext()) {
             System.out.println(t.next());
         }
-        while(e.hasMoreElements()){
+        while (e.hasMoreElements()) {
             System.out.println(e.nextElement());
         }
         return h;
     }
-    
+
     //concat two strings
     public void concat(String s1, String s2) {
         String s3 = s1.concat(s2); /// :)
