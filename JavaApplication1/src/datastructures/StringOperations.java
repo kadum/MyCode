@@ -48,7 +48,7 @@ public class StringOperations {
      wperm(c,3);
      }
      */
-    //permutation of string
+    //permutation of stringd
     public static ArrayList<String> getPerms(String str) {
         if (str == null) {
             return null;
@@ -134,6 +134,21 @@ public class StringOperations {
             s[n] = temp;
             i++;
             n--;
+        }
+    }
+
+    //another palindrome using in built java function
+    public void palindrome2(String original) {
+        int length = original.length();
+        String reverse = null;
+        for (int i = length - 1; i >= 0; i--) {
+            reverse = reverse + original.charAt(i);
+        }
+
+        if (original.equals(reverse)) {
+            System.out.println("Entered string is a palindrome.");
+        } else {
+            System.out.println("Entered string is not a palindrome.");
         }
     }
 

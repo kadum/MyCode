@@ -12,6 +12,75 @@ import sun.misc.Sort;
  */
 public class ArrayOperations {
 
+    /*
+     Java method to check if number is palindrome or not
+     */
+    public static boolean isPalindrome(int number) {
+        int palindrome = number; // copied number into variable
+        int reverse = 0;
+
+        while (palindrome != 0) {
+            int remainder = palindrome % 10;
+            reverse = reverse * 10 + remainder;
+            palindrome = palindrome / 10;
+        }
+
+        // if original and reverse of number is equal means
+        // number is palindrome in Java
+        if (number == reverse) {
+            return true;
+        }
+        return false;
+    }
+
+    //This method stores the sum of all the elements of array in variable sum and returns the average by dividing the sum with the length of array.
+    public static int findMean(int array[]) {
+        int sum = 0;
+        int average = 0;
+        int length = array.length;
+        for (int j = 0; j < length; j++) {
+            sum += array[j];
+            average = sum / length;
+        }
+        return average;
+    }
+
+//This method firstly sort the array and returns middle element if the length of arrray is odd.
+    //  Otherwise it will return the average of two miidele elements.
+    public static int findMedian(int array[]) {
+        int length = array.length;
+        int[] sort = new int[length];
+        System.arraycopy(array, 0, sort, 0, sort.length);
+        java.util.Arrays.sort(sort);
+        if (length % 2 == 0) {
+            return (sort[(sort.length / 2) - 1] + sort[sort.length / 2]) / 2;
+
+        } else {
+            return sort[sort.length / 2];
+        }
+
+    }
+
+//This method counts the occurrence of each element of array and return the 
+    // element which has the maximum count.
+    public static int findMode(int array[]) {
+        int max = 0, maxCount = 0;
+        int length = array.length;
+        for (int i = 0; i < length; ++i) {
+            int count = 0;
+            for (int j = 0; j < length; ++j) {
+                if (array[j] == array[i]) {
+                    ++count;
+                }
+            }
+            if (count > maxCount) {
+                maxCount = count;
+                max = array[i];
+            }
+        }
+        return max;
+    }
+
     // Declare the class if any required by programme in array operations.
     public class MinMax {
 
@@ -19,44 +88,41 @@ public class ArrayOperations {
         int max;
     }
     MinMax minmax;
+    Integer a[] = {1, 2, 3, 3};
+    java.util.List<Integer> list = java.util.Arrays.asList(a);
 
-    Integer a[] ={1,2,3,3};
-     java.util.List<Integer> list =  java.util.Arrays.asList(a);
-             
-   /* c++ code to find max occuring character in string
+    /* c++ code to find max occuring character in string
 
-char maxOccuringChar(char* str)
-{
-    if(str == NULL)
-        return NULL;
- 
-    int count[256] = {0};
-    int maxOccuringChar = str[0];
-    count[str[0]]++;
- 
-    for(int i=1; str[i]!='\0'; i++)
-    {
-        count[str[i]]++;
- 
-        if(count[maxOccuringChar] < count[str[i]])
-            maxOccuringChar = str[i];
-    }
- 
-    return maxOccuringChar;
-}
-*/ 
-     
-     //calculate Maximum difference between two elements in array which is present in array itself
-     public int maxDifference(int a[]){
-         int maxDiff = a[1] - a[0];
-         int minDiff = a[0];
-         for(int i = 0; i < a.length; i++){
-             
-             
-         }
+     char maxOccuringChar(char* str)
+     {
+         if(str == NULL)
+             return NULL;
+      
+         int count[256] = {0};
+         int maxOccuringChar = str[0];
+         count[str[0]]++;
+      
+         for(int i=1; str[i]!='\0'; i++)
+         {
+             count[str[i]]++;
+      
+             if(count[maxOccuringChar] < count[str[i]])
+                 maxOccuringChar = str[i];
+         }
+      
+         return maxOccuringChar;
      }
+     */
+    //calculate Maximum difference between two elements in array which is present in array itself
+    public int maxDifference(int a[]) {
+        int maxDiff = a[1] - a[0];
+        int minDiff = a[0];
+        for (int i = 0; i < a.length; i++) {
+        }
+    }
     //Segregate 0s and 1s in an array
     //Time Complexity: O(n)
+
     public void seggregate(int a[]) {
         int start = 0;
         int end = a.length - 1;
@@ -73,10 +139,11 @@ char maxOccuringChar(char* str)
                 a[end] = 1;
                 start++;
                 end--;
-            }       
+            }
         }
     }
 
+    // fin minmum and maximum element in an array
     public MinMax findMinAndMaxElement(int a[]) {
         int n = a.length;
         if (n % 2 == 0) {
