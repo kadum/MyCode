@@ -13,6 +13,87 @@ import java.util.*;
  */
 public class TreeOperations {
 
+    //public static void findSum(BinaryTreeNode<Integer> head, int sum,
+    public static void findSum(TreeNode head, int sum,
+            ArrayList<Integer> buffer, int level) {
+        if (head == null) {
+            return;
+        }
+        int tmp = sum;
+        buffer.add(head.getData());
+        for (int i = level; i > -1; i--) {
+            tmp -= buffer.get(i);
+            if (tmp == 0) {
+                print(buffer, i, level);
+            }
+        }
+        ArrayList<Integer> c1 = (ArrayList<Integer>) buffer.clone();
+        ArrayList<Integer> c2 = (ArrayList<Integer>) buffer.clone();
+        findSum(head.getLeft(), sum, c1, level + 1);
+        findSum(head.getRight(), sum, c2, level + 1);
+    }
+
+    public static void print(ArrayList<Integer> buffer, int level, int i2) {
+        for (int i = level; i <= i2; i++) {
+            System.out.print(buffer.get(i) + " ");
+        }
+        System.out.println();
+    }
+
+    // least common ancestors of 
+    public TreeNode LeastCommonAncestor(TreeNode root, TreeNode node1, TreeNode node2) {
+        if (root == null) {
+            return root;
+
+        }
+        if (root == node1 || root == node2) {
+            return root;
+        }
+        TreeNode left = LeastCommonAncestor(root.getLeft(), node1, node2);
+        TreeNode right = LeastCommonAncestor(root.getRight(), node1, node2);
+        if (left.equals(true) && right.equals(true)) {
+            return root;
+        } else {
+            if (left.equals(true)) {
+                return left;
+            } else {
+                return right;
+            }
+        }
+    }
+
+    //checking for existence of a path with given sum
+    public boolean checkPathWithGivenSum(TreeNode root, int sum) {
+        int subSum = 0;
+        if (root == null) {
+            return false;
+        } else {
+            subSum = sum - root.getData();
+            return (checkPathWithGivenSum(root.getLeft(), subSum)
+                    || checkPathWithGivenSum(root.getRight(), subSum));
+        }
+    }
+
+    //find deepest node in binary tree
+    public TreeNode findDeepestNode(TreeNode root) {
+        java.util.Queue<TreeNode> q = null;
+        TreeNode temp = null;
+        if (root == null) {
+            q.add(root);
+        }
+        while (!q.isEmpty()) {
+
+            temp = q.remove();
+            if (root.getLeft().equals(true)) {
+                q.add(root.getLeft());
+            }
+            if (root.getRight().equals(true)) {
+                q.add(root.getRight());
+            }
+        }
+        return temp;
+    }
+
     public TreeNode mirrorBinaryTree(TreeNode root) {
         if (root != null) {
             mirrorBinaryTree(root.getLeft());
@@ -47,6 +128,7 @@ public class TreeOperations {
         }
     }
 /// sum of leaf nodes in tree
+
     int leavesSum(TreeNode root) {
         if (root == null) {
             return 0;

@@ -5,6 +5,7 @@
 package datastructures;
 
 import java.util.Hashtable;
+import java.util.Stack;
 
 /**
  *
@@ -194,10 +195,10 @@ public class LinkedListAllProgrammes {
         // intersection of the linked list
         public Node getIntersection(Node a, Node b) {
             Node result = null;
+            Node n = null;
             while (a != null) {
                 int temp = isPresent(b, a.data);
                 if (temp == 1) {
-                    Node n = null;
                     n.appendToEnd(a.data);
                 } else {
                     a = a.next;
@@ -220,6 +221,30 @@ public class LinkedListAllProgrammes {
 
         }
 
+        // return the node at the start of loop/cycle in circular linkedl list
+        public Node getLoopStartNode(Node node) {
+            Node slow = node;
+            Node fast = node;
+
+            while (fast != null && fast.next != null) {
+                fast = fast.next.next;
+                slow = slow.next;
+            }
+            if (fast == null || fast.next == null) {
+                return null;
+            }
+            /* Move slow to Head. Keep fast at Meeting Point. Each are k
+              steps from the Loop Start. If they move at the same pace,
+              they must meet at Loop Start. */
+            slow = node;
+            while (slow != null) {
+                slow = slow.next;
+                fast = fast.next;
+            }
+            // Both now point to the start of the loop
+            return fast;
+        }
+
         // Rotate the linked list counter-clockwise by k nodes
         public void rotate(Node node, int k) {
             Node head = node;
@@ -240,21 +265,106 @@ public class LinkedListAllProgrammes {
             knode.next = null;
 
         }
-        
-        //concate the two linked lists
+        //print /get  middile element in the linked list
+
+        public void getMiddleElement(Node node) {
+            Node fast = null;
+            Node slow = null;
+            if (node != null) {
+                while (fast != null && fast.next != null) {
+                    fast = fast.next.next;
+                    slow = slow.next;
+                }
+            }
+            System.out.println("middle element is " + slow);
+        }
+
+        // delete the linked list
+        public void deleteLinkedList(Node node) {
+            Node nxt = null;
+            while (node != null) {
+                nxt = node.next;
+                // free(node); //or use below Garbace collectore
+                System.gc();
+                node = nxt;
+            }
+        }
+
+        //fun to get intersection of the two list
+        // time complexity O(m+n)
+        //where m - no of nodes in list 1 and 
+        // n- no of nodes in list2
+        public int intersectionOfLists(Node node1, Node node2) {
+            int result = 0;
+            Hashtable h = new Hashtable();
+            while (node1 != null) {
+                h.put(true, node1.data);
+            }
+            while (node2 != null) {
+                if (h.containsValue(node2.data)) {
+                    System.out.println("intersection is :" + node2.data);
+                    result = node2.data;
+                } else {
+                    System.out.println("no intersection found..");
+                }
+            }
+            return result;
+        }
+//concate the two linked lists
+
         public Node concatenateList(Node a, Node b) {
             if (a == null) {
                 return b;
             }
-            if(b==null){
+            if (b == null) {
                 return a;
             }
-            
-            while(a.next!=null){
-                a=a.next;
+
+            while (a.next != null) {
+                a = a.next;
             }
-            a.next=b;
+            a.next = b;
             return a;
+
+
+        }
+ public boolean isPalindrome(Node node) {
+     Node fast = node;
+     Node slow = node;
+     java.util.Stack<Integer> s = new Stack<Integer>();
+     while(fast !=null && fast.next != null){
+         fast= fast.next.next;
+         s.push(slow.data);
+         slow =  slow.next;
+     }
+     //for odd no of elements in the list
+     if(fast != null){
+         slow = slow.next;
+     }
+     while(slow != null){
+         int top = s.pop();
+         if(top != slow.data){
+             return false;
+         }
+         slow = slow.next;
+     }
+        
+     return true;
+ }
+        //check if linked list is palindrome or not using in built function 
+        public boolean isPalindrome2(java.util.LinkedList list) {
+            int n = list.size();
+            boolean state = false;
+            for (int i = 1; i <= n; i++, n--) {
+                if (list.get(i) == list.get(n)) {
+                    state = true;
+                } else {
+                    state = false;
+                    break;
+                }
+
+            }
+            return state;
         }
     }
 }

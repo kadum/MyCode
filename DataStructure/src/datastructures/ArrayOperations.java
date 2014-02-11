@@ -4,6 +4,7 @@
  */
 package datastructures;
 
+import java.util.HashMap;
 import sun.misc.Sort;
 
 /**
@@ -59,6 +60,28 @@ public class ArrayOperations {
             return sort[sort.length / 2];
         }
 
+    }
+// fine mode using Hash in O(n) time
+    public static double mode(double[] arr) {
+        java.util.HashMap arrayVals = new HashMap();
+        int maxOccurences = 1;
+        double mode = arr[0];
+
+        for (int i = 0; i < arr.length; i++) {
+            double currentIndexVal = arr[i];
+            if (arrayVals.containsKey(currentIndexVal)) {
+                int currentOccurencesNum = (Integer) arrayVals.get(currentIndexVal);
+                currentOccurencesNum++;
+                arrayVals.put(currentIndexVal, currentOccurencesNum);
+                if (currentOccurencesNum >= maxOccurences) {
+                    mode = currentIndexVal;
+                    maxOccurences = currentOccurencesNum;
+                }
+            } else {
+                arrayVals.put(arr[i], 1);
+            }
+        }
+        return mode;
     }
 
 //This method counts the occurrence of each element of array and return the 
